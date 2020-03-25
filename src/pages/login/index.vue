@@ -19,11 +19,11 @@
             <el-input
               class="login-input"
               v-model="ruleForm.pasword"
-              type="password"
+              :type="iconVisible ? 'password' : ''"
               placeholder="请输入密码"
             />
-            <i class="onlin el-icon-view" />
-            <i class="onlin el-icon-pear" />
+            <i @click="iconSwitch()" v-if="iconVisible" class="onlin el-icon-view" />
+            <i @click="iconSwitch()" v-else class="onlin el-icon-pear" />
           </div>
         </el-form-item>
         <el-button type="primary" @click="submit()">登 陆</el-button>
@@ -37,6 +37,7 @@ export default {
   name: "login",
   data() {
     return {
+      iconVisible: true,
       ruleForm: {
         name: "",
         pasword: ""
@@ -61,6 +62,9 @@ export default {
           console.log("登陆");
         }
       });
+    },
+    iconSwitch() {
+      this.iconVisible = !this.iconVisible;
     }
   }
 };
