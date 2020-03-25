@@ -6,14 +6,27 @@
     <div class="fonter"></div>
     <form class="log_nav">
       <h3>企业微信交接班后台管理系统</h3>
-      <el-form :model="ruleForm" :rules="rules">
+      <el-form ref="loginForm" :model="ruleForm" :rules="rules">
         <el-form-item prop="name">
-          <el-input v-model="ruleForm.name" placeholder="请输入账号"></el-input>
+          <div class="flex-form">
+            <i class="login-icon el-icon-user" />
+            <el-input class="login-input" v-model="ruleForm.name" placeholder="请输入账号" />
+          </div>
         </el-form-item>
-            <el-form-item prop="region">
-          <el-input v-model="ruleForm.pasword" placeholder="请输入密码"></el-input>
+        <el-form-item prop="pasword">
+          <div class="flex-form">
+            <i class="login-icon el-icon-s-goods" />
+            <el-input
+              class="login-input"
+              v-model="ruleForm.pasword"
+              type="password"
+              placeholder="请输入密码"
+            />
+            <i class="onlin el-icon-view" />
+            <i class="onlin el-icon-pear" />
+          </div>
         </el-form-item>
-        <el-button type="primary">提交</el-button>
+        <el-button type="primary" @click="submit()">登 陆</el-button>
       </el-form>
     </form>
   </div>
@@ -25,24 +38,40 @@ export default {
   data() {
     return {
       ruleForm: {
-        name: '',
-        pasword:''
+        name: "",
+        pasword: ""
       },
       rules: {
         name: [{ required: true, message: "请输入用户名！", trigger: "blur" }],
-        region: [{ min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' } ],
+        pasword: [
+          {
+            required: true,
+            min: 6,
+            message: "密码不能少于6位",
+            trigger: "blur"
+          }
+        ]
       }
     };
+  },
+  methods: {
+    submit() {
+      this.$refs["loginForm"].validate(res => {
+        if (res) {
+          console.log("登陆");
+        }
+      });
+    }
   }
 };
 </script>
 
 <style scoped>
 .login {
-    min-height: 100%;
-    width: 100%;
-    background-color: #f1faff;
-    overflow: hidden
+  min-height: 100%;
+  width: 100%;
+  background-color: #f1faff;
+  overflow: hidden;
 }
 .banner {
   width: 50%;
@@ -94,9 +123,23 @@ export default {
   position: absolute;
   bottom: 0;
 }
-.el-input__inner ::placeholder {
-  border:none;
-  font-size: 12px;
-  color: black;
+.flex-form {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #09f;
+}
+.login-icon {
+  width: 14px;
+  flex: 0 0 14px;
+  margin: 0 10px;
+}
+.login-input {
+  flex: 1;
+}
+.login-input .el-input__inner {
+  border: 0;
+}
+.onlin {
+  cursor: pointer;
 }
 </style>
