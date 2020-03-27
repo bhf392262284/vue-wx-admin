@@ -6,7 +6,10 @@ import router from "./router";
 import "element-ui/lib/theme-chalk/index.css";
 import ElementUI from "element-ui";
 import "./style/reset.css";
+import "./style/cover.css";
+import ajax from './api/request'
 
+Vue.prototype.$ajax = ajax
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 
@@ -14,6 +17,8 @@ Vue.config.productionTip = false;
 new Vue({
   el: "#app",
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: "<App/>"
 });

@@ -5,11 +5,9 @@ import Login from "@/pages/login/index";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: "/",
-      name: "login",
-      component: Login
-    }
-  ]
+  routes: [{
+    path: "/",
+    name: "login",
+    component: Login
+  }, ]
 });
