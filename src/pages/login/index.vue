@@ -70,15 +70,19 @@ export default {
               username: this.ruleForm.name,
               password: this.ruleForm.pasword
             }
-          }).then(res => {
-            this.loading = false;
-            this.$message({
-              message: res.msg,
-              type: "success",
-              duration: 1500
+          })
+            .then(res => {
+              this.loading = false;
+              this.$message({
+                message: res.msg,
+                type: "success",
+                duration: 1500
+              });
+              Cookie.set("token", res.data.token);
+            })
+            .catch(res => {
+              this.loading = false;
             });
-            Cookie.set("token", res.data.token);
-          });
         }
       });
     }
