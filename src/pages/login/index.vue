@@ -86,7 +86,7 @@ export default {
 };
 </script>
 
-<style >
+<style spoced>
 .loginCopty {
   position: absolute;
   width: 100%;
