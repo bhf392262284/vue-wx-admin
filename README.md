@@ -1,27 +1,5 @@
-# app
+后台管理代码学习笔记：
 
-> A Vue.js project
+1.导入封装好的 axios,因为封装好的 axios 用的默认导出（export default）,所以引入的时候不加大括号（{}）,并且引入名字可以随便起。如果是用导出方式是 export,那么引入的时候要加{}，并且变量要和导出的对应。
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+2.axios 请求的时候一般带 3 个常用的参数 url(请求地址)、method（请求方式）、data 或 params（get 用 params，post 用 data）。

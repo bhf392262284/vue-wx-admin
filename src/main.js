@@ -5,6 +5,7 @@ import App from "./App";
 import router from "./router";
 import "element-ui/lib/theme-chalk/index.css";
 import ElementUI from "element-ui";
+import "./style/global.css";
 import "./style/reset.css";
 import "./style/cover.css";
 import ajax from './api/request'
