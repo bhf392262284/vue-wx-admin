@@ -7,9 +7,8 @@ import "element-ui/lib/theme-chalk/index.css";
 import ElementUI from "element-ui";
 import "./style/reset.css";
 import "./style/cover.css";
-import ajax from './api/request'
-
-Vue.prototype.$ajax = ajax
+import Axios from "./api/request";
+Vue.prototype.axios = Axios;
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 

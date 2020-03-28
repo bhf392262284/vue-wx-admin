@@ -6,27 +6,26 @@
     </div>
     <div class="login">
       <h3>企业微信交接班后台管理系统</h3>
-      <el-form :model="ruleForm" ref="ruleForm" :rules="rules">
+      <el-form :model="form" :rules="rules" ref="formName">
         <div class="formStyle">
           <el-form-item prop="name">
             <i class="el-icon-user"></i>
-            <el-input placeholder="请输入账号" v-model="ruleForm.name"></el-input>
+            <el-input placeholder="请输入账号" v-model="form.name"></el-input>
           </el-form-item>
         </div>
         <div class="formStyle">
-          <el-form-item prop="pasword">
+          <el-form-item prop="password">
             <i class="el-icon-s-goods" />
             <el-input
-              @keyup.enter.native="submit()"
-              v-bind:type="isIcon? 'password':'text'"
+              v-model="form.password"
+              :type="isIcon ? 'password':'text'"
               placeholder="请输入密码"
-              v-model="ruleForm.pasword "
             ></el-input>
-            <i @click="isIcons()" v-if="isIcon" class="el-icon-view onlin" />
-            <i @click="isIcons()" v-else class="el-icon-pear onlin" />
+            <i @click="clickIcon()" v-if="isIcon" class="el-icon-view onlin" />
+            <i @click="clickIcon()" v-else class="el-icon-pear onlin" />
           </el-form-item>
         </div>
-        <el-button :loading="loading" type="primary" @click="submit()">登录</el-button>
+        <el-button type="primary" @click="submitLogin()" :loading="isRotate">登录</el-button>
       </el-form>
     </div>
     <div class="footer"></div>
@@ -38,51 +37,51 @@ export default {
   name: "loginCopy",
   data() {
     return {
+      isRotate: false,
       isIcon: true,
-      loading: false,
-      ruleForm: {
+      form: {
         name: "",
-        pasword: ""
+        password: ""
       },
       rules: {
-        name: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        pasword: {
-          min: 6,
-          required: true,
-          message: "请输入密码",
-          trigger: "blur"
-        }
+        name: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [
+          { required: true, message: "请输入活动名称", trigger: "blur" },
+          {
+            min: 6,
+            required: true,
+            message: "密码不能少于6位",
+            trigger: "blur"
+          }
+        ]
       }
     };
   },
   methods: {
-    isIcons() {
-      return (this.isIcon = !this.isIcon);
+    clickIcon() {
+      this.isIcon = !this.isIcon;
     },
-    submit() {
-      this.$refs["ruleForm"].validate(res => {
-        if (res) {
-          this.loading = true;
-          this.$ajax({
+    submitLogin() {
+      this.$refs["formName"].validate(valid => {
+        if (valid) {
+          this.isRotate = !this.isRotate;
+          this.axios({
             url: "/admin/manager/login",
             method: "post",
             data: {
-              username: this.ruleForm.name,
-              password: this.ruleForm.pasword
+              username: this.form.name,
+              password: this.form.password
             }
           })
             .then(res => {
-              this.loading = false;
-              this.$message({
-                message: res.msg,
-                type: "success",
-                duration: 1500
-              });
+              this.isRotate = false;
               Cookie.set("token", res.data.token);
+              this.$message({
+                message: "密码正确",
+                type: "success"
+              });
             })
-            .catch(res => {
-              this.loading = false;
-            });
+            .catch(res => {});
         }
       });
     }

@@ -1,5 +1,5 @@
-import axios from "axios";
-import Cookie from 'js-cookie'
+import Cookie from 'js-cookie';
+import axios from 'axios';
 import {
   Message
 } from "element-ui";
@@ -13,7 +13,7 @@ const request = axios.create({
 // 请求拦截器
 request.interceptors.request.use(config => {
   config.headers["Content-Type"] = "application/json;charset=utf-8";
-  config.headers.token = 'user_token=' + Cookie.get("token")
+  config.headers["Cookie"] = "user_token=" + Cookie.get('token')
   return config;
 });
 
