@@ -1,4 +1,3 @@
-
 <template>
   <div class="loginCopty">
     <div class="bgimg">
@@ -18,14 +17,17 @@
             <i class="el-icon-s-goods" />
             <el-input
               v-model="form.password"
-              :type="isIcon ? 'password':'text'"
+              :type="isIcon ? 'password' : 'text'"
               placeholder="请输入密码"
+              @keyup.enter.native="submitLogin()"
             ></el-input>
             <i @click="clickIcon()" v-if="isIcon" class="el-icon-view onlin" />
             <i @click="clickIcon()" v-else class="el-icon-pear onlin" />
           </el-form-item>
         </div>
-        <el-button type="primary" @click="submitLogin()" :loading="isRotate">登录</el-button>
+        <el-button type="primary" @click="submitLogin()" :loading="isRotate"
+          >登录</el-button
+        >
       </el-form>
     </div>
     <div class="footer"></div>
@@ -46,7 +48,6 @@ export default {
       rules: {
         name: [{ required: true, message: "请输入密码", trigger: "blur" }],
         password: [
-          { required: true, message: "请输入活动名称", trigger: "blur" },
           {
             min: 6,
             required: true,
@@ -80,8 +81,11 @@ export default {
                 message: res.msg,
                 type: "success"
               });
+              this.$router.push("/");
             })
-            .catch(res => {});
+            .catch(res => {
+              this.isRotate = false;
+            });
         }
       });
     }

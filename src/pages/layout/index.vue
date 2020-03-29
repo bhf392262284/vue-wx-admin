@@ -11,20 +11,25 @@
           <el-menu
             default-active="0"
             class="el-menu-vertical-demo"
-            v-for="(menu,index)  in menus"
+            v-for="(menu, index) in menus"
             :key="index"
             router
           >
             <el-submenu v-if="menu.children" :index="index + ''">
               <template slot="title">
                 <i class="el-icon-location"></i>
-                <span>{{menu.title}}</span>
+                <span>{{ menu.title }}</span>
               </template>
-              <el-menu-item :index="v.path" v-for=" (v,k)  in menu.children" :key="k">{{v.title}}</el-menu-item>
+              <el-menu-item
+                :index="v.path"
+                v-for="(v, k) in menu.children"
+                :key="k"
+                >{{ v.title }}</el-menu-item
+              >
             </el-submenu>
             <el-menu-item v-else :index="menu.path">
               <i class="el-icon-menu"></i>
-              <span slot="title">{{menu.title}}</span>
+              <span slot="title">{{ menu.title }}</span>
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -36,14 +41,14 @@
         <div class="right-content-list">
           <el-row class="block-col-2">
             <el-col>
-              <el-dropdown trigger="click">
+              <el-dropdown trigger="click" @command="handleCommand">
                 <span class="el-dropdown-link">
-                  系统管理员
+                  {{ name }}
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>首页</el-dropdown-item>
-                  <el-dropdown-item>退出</el-dropdown-item>
+                  <el-dropdown-item command="a">首页</el-dropdown-item>
+                  <el-dropdown-item command="b">退出</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -56,17 +61,20 @@
     </div>
   </div>
 </template>
- 
+
 <script>
+import Cookie from "js-cookie";
 export default {
   name: "layout",
   data() {
     return {
+      name: "",
       menus: []
     };
   },
   created() {
     this.navigationList();
+    this.guanli();
   },
   methods: {
     navigationList() {
@@ -76,6 +84,22 @@ export default {
       }).then(res => {
         this.menus = res.data.menus;
       });
+    },
+    guanli() {
+      this.axios({
+        url: "/admin/manager/router",
+        method: "post"
+      }).then(res => {
+        this.name = res.data.account.name;
+      });
+    },
+    handleCommand(command) {
+      if (command === "a") {
+        this.$router.push("/");
+      } else {
+        this.$router.push("/login");
+        Cookie.remove("token");
+      }
     }
   }
 };
@@ -122,6 +146,7 @@ export default {
   margin: 26px 18px 0 0;
 }
 .top-vav {
+  padding: 10px 15px;
   overflow-y: auto;
   position: absolute;
   width: 100%;
