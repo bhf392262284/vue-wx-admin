@@ -77,7 +77,7 @@ export default {
               this.isRotate = false;
               Cookie.set("token", res.data.token);
               this.$message({
-                message: "密码正确",
+                message: res.msg,
                 type: "success"
               });
             })

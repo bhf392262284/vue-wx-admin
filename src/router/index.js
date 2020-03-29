@@ -1,7 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Login from "@/pages/login/index";
-import layout from '@/pages/layout/layout';
+import layout from '@/pages/layout/index';
+import Home from '@/pages/home/index'
+import affairList from '@/pages/Administration/HandlingOfEvents/index'
+import dutyList from '@/pages/Administration/Duty/index'
+import meetingList from '@/pages/Administration/Assistant/index'
 Vue.use(Router);
 
 export default new Router({
@@ -11,9 +15,28 @@ export default new Router({
       component: Login
     },
     {
-      path: "/layout",
+      path: '/',
       name: 'layout',
-      component: layout
+      component: layout,
+      children: [{
+          path: '/',
+          name: 'home',
+          component: Home
+        }, {
+          path: 'affairList',
+          name: 'affairList',
+          component: affairList
+        }, {
+          path: 'dutyList',
+          name: 'dutyList',
+          component: dutyList
+        },
+        {
+          path: 'meetingList',
+          name: 'meetingList',
+          component: meetingList
+        }
+      ]
     }
   ]
 });

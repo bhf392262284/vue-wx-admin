@@ -44,3 +44,21 @@
 .loginCopty .login .el-button {
   width: 100%;
 }
+
+#layout .tacWidth {
+  position: relative;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+#layout .el {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+
+#layout .el-menu-vertical-demo {
+  border: 0;
+}
