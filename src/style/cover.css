@@ -62,3 +62,41 @@
 #layout .el-menu-vertical-demo {
   border: 0;
 }
+
+.tableHeader {
+  border-radius: 10px 0 0 0;
+  display: flex;
+  height: 39px;
+  background-color: #f5f7fa;
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, .12), 0 0 10px 0 rgba(0, 0, 0, .04);
+}
+
+/* 公共头 */
+.tableHeader span {
+  line-height: 39px;
+  background-color: #409eff;
+  color: #fff;
+  padding: 0 20px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 10px 0 0 0;
+}
+
+#HandlingOfEvents .table .el-form-item__label {
+  font-weight: 700;
+}
+
+#HandlingOfEvents .has-gutter:nth-child(1) {
+  text-align: center;
+}
+
+#HandlingOfEvents .block {
+  padding: 32px 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#HandlingOfEvents .bot .el-button {
+  margin-left: 0;
+}
