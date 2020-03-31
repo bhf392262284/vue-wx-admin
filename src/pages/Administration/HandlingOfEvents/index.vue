@@ -236,9 +236,7 @@ export default {
   background-color: white;
   border-radius: 10px 0 0 0;
 }
-.table {
-  padding: 15px;
-}
+
 .bot {
   display: flex;
   flex-wrap: wrap;

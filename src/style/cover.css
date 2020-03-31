@@ -100,3 +100,12 @@
 #HandlingOfEvents .bot .el-button {
   margin-left: 0;
 }
+
+.table {
+  padding: 15px;
+  background-color: white;
+}
+
+.el-form-item__label {
+  font-weight: 700;
+}
