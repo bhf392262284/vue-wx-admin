@@ -61,36 +61,30 @@
       </el-form>
       <el-table
         ref="multipleTable"
-        :data="dataList"
+        :data="tableData"
         style="width: 100%"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" align="center"></el-table-column>
-        <el-table-column label="级别" align="center">
+        <el-table-column label="会议标题" align="center">
           <template slot-scope="scope">
             <div v-text="levelTitle(scope.row)"></div>
           </template>
         </el-table-column>
-        <el-table-column prop="eventTypeName" label="事件分类" align="center"></el-table-column>
+        <el-table-column prop="eventTypeName" label="会议室" align="center"></el-table-column>
         <el-table-column label="状态" align="center">
           <template slot-scope="scope">
             <div v-html="zhuangtai(scope.row)"></div>
           </template>
         </el-table-column>
-        <el-table-column prop="address" label="模板分类" align="center"></el-table-column>
-        <el-table-column prop="reporter" label="发起人" align="center"></el-table-column>
-        <el-table-column prop="deptName" label="部门/科室" align="center"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" align="center"></el-table-column>
-        <el-table-column prop="updateTime" label="修改时间" align="center"></el-table-column>
+        <el-table-column prop="address" label="发布人" align="center"></el-table-column>
+        <el-table-column prop="reporter" label="会议时间" align="center"></el-table-column>
+        <el-table-column prop="deptName" label="会议时长" align="center"></el-table-column>
+        <el-table-column prop="createTime" label="发布时间" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
-          <template slot-scope="scope">
+          <template>
             <el-button type="primary" round size="mini">查看</el-button>
-            <el-button
-              type="danger"
-              round
-              size="mini"
-              @click="handleDelete(scope.$index, scope.row)"
-            >删除</el-button>
+            <el-button type="danger" round size="mini">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -123,8 +117,44 @@ export default {
         templateType: "",
         eventType: ""
       },
-      dataList: [],
-      currentPage: 1
+      currentPage: 1,
+      tableData: [
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-08",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-06",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-07",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        }
+      ]
     };
   },
   methods: {

@@ -109,3 +109,15 @@
 .el-form-item__label {
   font-weight: 700;
 }
+
+#see .cent {
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+#assistant .bgc {
+  padding: 15px;
+  background-color: white;
+}

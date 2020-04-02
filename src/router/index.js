@@ -6,6 +6,7 @@ import Home from '@/pages/home/index'
 import affairList from '@/pages/Administration/HandlingOfEvents/index'
 import dutyList from '@/pages/Administration/Duty/index'
 import meetingList from '@/pages/Administration/Assistant/index'
+import Seex from '@/pages/Administration/Duty/See/index'
 Vue.use(Router);
 
 export default new Router({
@@ -29,7 +30,12 @@ export default new Router({
         }, {
           path: 'dutyList',
           name: 'dutyList',
-          component: dutyList
+          component: dutyList,
+        },
+        {
+          path: 'Seex',
+          name: "Seex",
+          component: Seex
         },
         {
           path: 'meetingList',

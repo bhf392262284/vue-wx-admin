@@ -71,28 +71,28 @@ export default {
       loading: true,
       searchTime: [],
       formInline: {
-        endTime: "",
         startTime: "",
-        Month: "",
-        state: "",
-        taplateType: ""
+        endTime: "",
+        Month: "", //月份
+        state: "", //状态
+        taplateType: "" //模板类型
       },
       multipleSelection: []
     };
   },
   methods: {
     search() {
-      this.formInline.endTime = this.searchTime[0];
-      this.formInline.startTime = this.searchTime[1];
+      this.formInline.startTime = this.searchTime[0];
+      this.formInline.endTime = this.searchTime[1];
       this.axios({
-        url: "/admin/rotaLog/getPageRotaLogList",
+        url: "admin/rotaLog/getPageRotaLogList",
         method: "post",
         data: {
           endTime: this.formInline.endTime,
           startTime: this.formInline.startTime,
-          Month: this.formInline.Month,
-          handoverStatus: this.formInline.state,
-          logType: this.formInline.taplateType
+          Month: parseInt(this.formInline.Month),
+          handoverStatus: parseInt(this.formInline.state),
+          logType: parseInt(this.formInline.taplateType)
         }
       }).then(res => {
         console.log(res);
