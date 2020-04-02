@@ -40,28 +40,19 @@
         </el-form-item>
         <el-form-item label=" 事件类型:">
           <el-select placeholder="请选择" v-model="form.eventType">
-            <el-option label="医院管理" value="1"></el-option>
-            <el-option label="后勤保障" value="2"></el-option>
-            <el-option label="其他" value="3"></el-option>
-            <el-option label="安全生产" value="4"></el-option>
-            <el-option label="急症急救" value="5"></el-option>
-            <el-option label="物业问题" value="6"></el-option>
-            <el-option label="服务态度" value="7"></el-option>
-            <el-option label="一换矛盾" value="8"></el-option>
-            <el-option label="工作意见/建议" value="9"></el-option>
-            <el-option label="上级交办事项" value="10"></el-option>
+            <el-option :label="k.name" :value="v" v-for="(k,v) in clickTypes" :key="v"></el-option>
           </el-select>
         </el-form-item>
         <el-button type="primary" round size="mini" @click="search()">
           <i class="el-icon-search"></i> 查询
         </el-button>
-        <el-button type="danger" round size="mini" @click="del(index)">
+        <el-button type="danger" round size="mini" @click="del()">
           <i class="el-icon-delete"></i>批量删除
         </el-button>
       </el-form>
       <el-table
         ref="multipleTable"
-        :data="tableData"
+        :data="dataList"
         style="width: 100%"
         @selection-change="handleSelectionChange"
       >
@@ -82,9 +73,14 @@
         <el-table-column prop="deptName" label="会议时长" align="center"></el-table-column>
         <el-table-column prop="createTime" label="发布时间" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
-          <template>
+          <template slot-scope="scope">
             <el-button type="primary" round size="mini">查看</el-button>
-            <el-button type="danger" round size="mini">删除</el-button>
+            <el-button
+              type="danger"
+              round
+              size="mini"
+              @click="handleDelete(scope.$index,scope.row)"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -108,7 +104,11 @@ export default {
   name: "HandlingOfEvents",
   data() {
     return {
+      clickTypes: [],
+      dataList: [],
       searchTime: "",
+      // 表格选中数据
+      multipleSelection: [],
       form: {
         startTime: "",
         endTime: "",
@@ -117,44 +117,7 @@ export default {
         templateType: "",
         eventType: ""
       },
-      currentPage: 1,
-      tableData: [
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-08",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-06",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-07",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        }
-      ]
+      currentPage: 1
     };
   },
   methods: {
@@ -196,7 +159,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.deletes(row);
+          this.deletes(row.id);
         })
         .catch(() => {
           this.$message({
@@ -205,11 +168,11 @@ export default {
           });
         });
     },
-    deletes(row) {
+    deletes(id) {
       this.axios({
         url: "admin/event/deleteEventByIds",
         method: "post",
-        data: { ids: row.id }
+        data: { ids: id }
       }).then(res => {
         this.search();
         this.$message({
@@ -227,6 +190,7 @@ export default {
         this.$refs.multipleTable.clearSelection();
       }
     },
+    // 表格批量选中或取消
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
@@ -254,10 +218,26 @@ export default {
       }).then(res => {
         this.dataList = res.data.dataList;
       });
+    },
+    clickType() {
+      this.axios({ url: "/admin/event/getEventType", method: "post" }).then(
+        res => {
+          this.clickTypes = res.data;
+        }
+      );
+    },
+    // 批量删除
+    del() {
+      let arr = [];
+      for (let i = 0; i < this.multipleSelection.length; i++) {
+        arr.push(this.multipleSelection[i].id);
+      }
+      this.deletes(arr.join(","));
     }
   },
   created() {
     this.search();
+    this.clickType();
   }
 };
 </script>

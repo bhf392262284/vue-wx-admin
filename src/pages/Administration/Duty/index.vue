@@ -15,7 +15,6 @@
             value-format="yyyy-MM-dd"
           ></el-date-picker>
         </el-form-item>
-
         <el-form-item label="月份:">
           <el-select v-model="formInline.Month" placeholder="请选择">
             <el-option label="请选择" value="0"></el-option>
@@ -49,15 +48,36 @@
         :data="multipleSelection"
         tooltip-effect="dark"
         style="width: 100%"
-        @selection-change="handleSelectionChange"
-        v-loading="loading"
       >
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column label="日期" width="120">
-          <!-- <template slot-scope="scope">{{ scope.row.date }}</template> -->
+        <el-table-column label="模板分类" width="120">
+          <template slot-scope="scope">
+            <span v-show="parseInt(scope.row.watchLogType)===0" v-text="'行政日志'"></span>
+            <span v-show="parseInt(scope.row.watchLogType)===1" v-text="'投诉日志'"></span>
+          </template>
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-        <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
+        <el-table-column label="状态">
+          <template slot-scope="scope">
+            <span v-show="parseInt(scope.row.handoverStatus) === 0" v-text="'待接班'" />
+            <span v-show="parseInt(scope.row.handoverStatus) === 1" v-text="'草稿'" />
+            <span v-show="parseInt(scope.row.handoverStatus) === 2" v-text="'已接班'" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="handoverPersonName" label="交班人"></el-table-column>
+        <el-table-column prop="successorName" label="接班人"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间"></el-table-column>
+        <el-table-column prop="updateTime" label="修改时间"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button type="primary" round size="mini" @click="tiaozhuan(scope.row.id)">查看</el-button>
+            <el-button
+              type="danger"
+              round
+              size="mini"
+              @click="handleDelete(scope.$index,scope.row)"
+            >删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -81,6 +101,17 @@ export default {
     };
   },
   methods: {
+    tiaozhuan(id) {
+      this.$router.push({
+        path: "Seex",
+        query: {
+          di: id
+        }
+      });
+    },
+    handleDelete(index, row) {
+      this.multipleSelection.splice(index, 1);
+    },
     search() {
       this.formInline.startTime = this.searchTime[0];
       this.formInline.endTime = this.searchTime[1];
@@ -90,17 +121,20 @@ export default {
         data: {
           endTime: this.formInline.endTime,
           startTime: this.formInline.startTime,
-          Month: parseInt(this.formInline.Month),
+          month: parseInt(this.formInline.Month),
           handoverStatus: parseInt(this.formInline.state),
           logType: parseInt(this.formInline.taplateType)
         }
       }).then(res => {
-        console.log(res);
+        this.multipleSelection = res.data.dataList;
       });
-    },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
     }
+    // handleSelectionChange(val) {
+    //   this.multipleSelection = val;
+    // }
+  },
+  created() {
+    this.search();
   }
 };
 </script>
