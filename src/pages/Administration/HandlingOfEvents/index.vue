@@ -74,7 +74,7 @@
         <el-table-column prop="createTime" label="发布时间" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
           <template slot-scope="scope">
-            <el-button type="primary" round size="mini">查看</el-button>
+            <el-button type="primary" round size="mini" @click="Jump(scope.$index,scope.row)">查看</el-button>
             <el-button
               type="danger"
               round
@@ -121,6 +121,14 @@ export default {
     };
   },
   methods: {
+    Jump(index, row) {
+      this.$router.push({
+        name: "transaction",
+        params: {
+          id: row.id
+        }
+      });
+    },
     zhuangtai(row) {
       if (row.handleStatus === "0") {
         return "待处理";

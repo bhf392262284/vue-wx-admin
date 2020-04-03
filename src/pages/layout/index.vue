@@ -20,12 +20,7 @@
                 <i class="el-icon-location"></i>
                 <span>{{ menu.title }}</span>
               </template>
-              <el-menu-item
-                :index="v.path"
-                v-for="(v, k) in menu.children"
-                :key="k"
-                >{{ v.title }}</el-menu-item
-              >
+              <el-menu-item :index="v.path" v-for="(v, k) in menu.children" :key="k">{{ v.title }}</el-menu-item>
             </el-submenu>
             <el-menu-item v-else :index="menu.path">
               <i class="el-icon-menu"></i>
@@ -146,6 +141,7 @@ export default {
   margin: 26px 18px 0 0;
 }
 .top-vav {
+  box-sizing: border-box;
   padding: 10px 15px;
   overflow-y: auto;
   position: absolute;

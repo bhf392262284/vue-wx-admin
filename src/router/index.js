@@ -7,11 +7,11 @@ import affairList from "@/pages/Administration/HandlingOfEvents/index";
 import dutyList from "@/pages/Administration/Duty/index";
 import meetingList from "@/pages/Administration/Assistant/index";
 import Seex from "@/pages/Administration/Duty/See/index";
+import transaction from "@/pages/Administration/HandlingOfEvents/transaction/index"
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: "/login",
       name: "login",
       component: Login
@@ -20,8 +20,7 @@ export default new Router({
       path: "/",
       name: "layout",
       component: layout,
-      children: [
-        {
+      children: [{
           path: "/",
           name: "home",
           component: Home
@@ -40,6 +39,11 @@ export default new Router({
           path: "Seex",
           name: "Seex",
           component: Seex
+        },
+        {
+          path: 'transaction',
+          name: "transaction",
+          component: transaction
         },
         {
           path: "meetingList",

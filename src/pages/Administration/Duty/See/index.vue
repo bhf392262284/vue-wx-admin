@@ -4,13 +4,13 @@
       <span>行政日志</span>
     </div>
     <div class="contentArea">
-      <h2>值班日志-行政</h2>
+      <h2>{{templateName}}</h2>
       <el-row>
         <el-col :span="8">
           <div class="grid-content bg-purple">
             <h3>
               创建时间：
-              <span>2020-03-02 16:33</span>
+              <span>{{createTime}}</span>
             </h3>
           </div>
         </el-col>
@@ -29,7 +29,7 @@
           <div class="grid-content bg-purple">
             <h3>
               值班人：
-              <span>江承煌</span>
+              <span>{{handoverPerson}}</span>
             </h3>
           </div>
         </el-col>
@@ -37,7 +37,7 @@
           <div class="grid-content bg-purple-light">
             <h3>
               接班人：
-              <span>任我行</span>
+              <span>{{successor}}</span>
             </h3>
           </div>
         </el-col>
@@ -51,14 +51,14 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <p>1、重大 医患矛盾 信息科 江承煌 有人死了 处理意见/结果：无 2、重大 工作意见/建议 信息科 江承煌 经历过 处理意见/结果：你给你你你 孙兴民</p>
+          <p>{{watchLog}}</p>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="8">
           <h3>
             提交时间:
-            <span>2020-03-02 16:33</span>
+            <span>{{handoverTime}}</span>
           </h3>
         </el-col>
       </el-row>
@@ -72,7 +72,7 @@
       </el-row>
     </div>
     <el-row class="cent">
-      <el-button type="primary" size="medium" round>
+      <el-button type="primary" size="medium" round @click="goReturn()">
         <i class="el-icon-back"></i>
         返回列表
       </el-button>
@@ -82,10 +82,43 @@
 
 <script>
 export default {
-  name: "see"
+  name: "see",
+  data() {
+    return {
+      templateName: "",
+      administration: "",
+      createTime: "",
+      handoverPerson: "",
+      successor: "",
+      handoverTime: "",
+      watchLog: ""
+    };
+  },
+  created() {
+    this.axios({
+      url: "/admin/rotaLog/getRotaLogById",
+      method: "post",
+      data: {
+        id: this.$route.params.id
+      }
+    }).then(res => {
+      console.log(res);
+      this.templateName = res.data.templateName;
+      this.administration = res.data.administration;
+      this.createTime = res.data.createTime;
+      this.handoverPerson = res.data.handoverPerson;
+      this.successor = res.data.successor;
+      this.handoverTime = res.data.handoverTime;
+      this.watchLog = res.data.watchLog;
+    });
+  },
+  methods: {
+    goReturn() {
+      this.$router.push({ path: "dutyList" });
+    }
+  }
 };
 </script>
-
 <style>
 .contentArea {
   border-radius: 0 0 10px 10px;
@@ -99,7 +132,7 @@ export default {
   box-sizing: border-box;
   font-size: 14px;
   font-weight: 500;
-  border-radius: 10px 0 0 0;
+  border-radius: 10px 10px 0 0;
 }
 .contentArea {
   padding: 15px;

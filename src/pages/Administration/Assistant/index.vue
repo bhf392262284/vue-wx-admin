@@ -6,6 +6,8 @@
     <el-form :inline="true" ref="ruleForm" class="demo-ruleForm bgc" size="mini">
       <el-form-item label="日期:">
         <el-date-picker
+          max-width="1200"
+          style="width: 1000"
           v-model="searchTime"
           type="daterange"
           range-separator="至"
@@ -15,13 +17,13 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item label="月份:">
-        <el-select v-model="form.Month" placeholder="请选择">
+        <el-select v-model="from.Month" placeholder="请选择">
           <el-option label="请选择" value="0"></el-option>
           <el-option label="1月" value="1"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="状态:">
-        <el-select v-model="form.state" placeholder="请选择">
+        <el-select v-model="from.state" placeholder="请选择">
           <el-option label="请选择" value="0"></el-option>
           <el-option label="待接班" value="1"></el-option>
           <el-option label="草稿" value="2"></el-option>
@@ -59,6 +61,13 @@ export default {
   name: "assistant",
   data() {
     return {
+      searchTime: [],
+      from: {
+        startTime: "",
+        endTime: "",
+        Month: "",
+        state: ""
+      },
       dataList: [
         {
           name: "小米",
@@ -68,14 +77,28 @@ export default {
           fase: "小米",
           shijian: "小米"
         }
-      ],
-      searchTime: [],
-      form: {
-        Month: "",
-        state: ""
-      }
+      ]
     };
-  }
+  },
+  methods: {
+    search() {
+      this.from.startTime = this.searchTime[0];
+      this.from.endTime = this.searchTime[1];
+      this.axios({
+        url: "admin/meetinginfo/getPageMeetingInfoList",
+        method: "post",
+        data: {
+          startTime: this.from.startTime,
+          endTime: this.from.endTime,
+          meetingStatus: parseInt(this.from.state),
+          Month: parseInt(this.from.Month)
+        }
+      }).then(res => {
+        console.log(res);
+      });
+    }
+  },
+  cerated() {}
 };
 </script>
 

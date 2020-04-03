@@ -64,7 +64,7 @@
 }
 
 .tableHeader {
-  border-radius: 10px 0 0 0;
+  border-radius: 10px 10px 0 0;
   display: flex;
   height: 39px;
   background-color: #f5f7fa;
@@ -110,7 +110,7 @@
   font-weight: 700;
 }
 
-#see .cent {
+.cent {
   height: 56px;
   display: flex;
   justify-content: center;
