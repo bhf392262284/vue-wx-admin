@@ -13,7 +13,6 @@
             start-placeholder="开始日期"
             end-placeholder="结束日期"
             value-format="yyyy-MM-dd"
-            @click="prohibit()"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="月份:">
@@ -70,12 +69,7 @@
         <el-table-column prop="updateTime" label="修改时间"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              round
-              size="mini"
-              @click="tiaozhuan(scope.$index, scope.row)"
-            >查看</el-button>
+            <el-button type="primary" round size="mini" @click="tiaozhuan(scope.row.id)">查看</el-button>
             <el-button
               type="danger"
               round
@@ -95,7 +89,7 @@ export default {
   data() {
     return {
       loading: true,
-      searchTime: "",
+      searchTime: [],
       formInline: {
         startTime: "",
         endTime: "",
@@ -107,19 +101,13 @@ export default {
     };
   },
   methods: {
-    //    prohibit () {
-    // if (this.formInline.startTime && this.formInline.endTime) {
-    //   return  this.state ==='',
-    // },
-    // },
-    tiaozhuan(index, row) {
+    tiaozhuan(id) {
       this.$router.push({
-        name: "Seex",
-        params: {
-          id: row.id
+        path: "Seex",
+        query: {
+          id: id
         }
       });
-      console.log(row.id);
     },
     handleDelete(index, row) {
       this.multipleSelection.splice(index, 1);

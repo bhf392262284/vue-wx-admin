@@ -99,7 +99,7 @@ export default {
       url: "/admin/rotaLog/getRotaLogById",
       method: "post",
       data: {
-        id: this.$route.params.id
+        id: this.$route.query.id
       }
     }).then(res => {
       console.log(res);

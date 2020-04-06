@@ -124,7 +124,7 @@ export default {
     Jump(index, row) {
       this.$router.push({
         name: "transaction",
-        params: {
+        query: {
           id: row.id
         }
       });

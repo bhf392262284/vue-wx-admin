@@ -4,13 +4,13 @@
       <span>事务处理</span>
     </div>
     <div class="warp">
-      <h2>{{templateName}}</h2>
+      <h2>{{detailsObj.templateName}}</h2>
       <el-row>
         <el-col :span="8">
           <div class="grid-content bg-purple-dark">
             <h4>
               创建时间：
-              <span>{{createTime}}</span>
+              <span>{{detailsObj.handoverEvent.createTime}}</span>
             </h4>
           </div>
         </el-col>
@@ -18,7 +18,7 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               部门/科室：
-              <span>{{templateName}}</span>
+              <span>{{detailsObj.handoverEvent.templateName}}</span>
             </h4>
           </div>
         </el-col>
@@ -36,7 +36,7 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               类型：
-              <span>{{eventTypeName}}</span>
+              <span>{{detailsObj.handoverEvent.eventTypeName}}</span>
             </h4>
           </div>
         </el-col>
@@ -44,7 +44,7 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               监督人：
-              <span>{{supervisor}}</span>
+              <span>{{detailsObj.handoverEvent.supervisor}}</span>
             </h4>
           </div>
         </el-col>
@@ -55,7 +55,7 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               汇报人：
-              <span>{{reporter}}</span>
+              <span>{{detailsObj.handoverEvent.reporter}}</span>
             </h4>
           </div>
         </el-col>
@@ -65,7 +65,7 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               内容
-              <span>{{content}}</span>
+              <span>{{detailsObj.handoverEvent.content}}</span>
             </h4>
           </div>
         </el-col>
@@ -84,7 +84,7 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               回复时间：
-              <span>123456</span>
+              <span>{{detailsObj.handoverEvent.createTime}}</span>
             </h4>
           </div>
         </el-col>
@@ -94,7 +94,7 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               值班人：
-              <span>123456</span>
+              <span>{{detailsObj.handoverEvent.watch}}</span>
             </h4>
           </div>
         </el-col>
@@ -102,7 +102,7 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               转交人
-              <span>123456</span>
+              <span>{{detailsObj.handoverEvent.handover}}</span>
             </h4>
           </div>
         </el-col>
@@ -110,20 +110,26 @@
           <div class="grid-content bg-purple-dark">
             <h4>
               二线领导：
-              <span>123456</span>
+              <span>{{detailsObj.handoverEvent.secLeader}}</span>
             </h4>
           </div>
         </el-col>
       </el-row>
       <el-row>
         <h4>处理意见：</h4>
-        <span>你你你你</span>
+        <span>handleContent</span>
       </el-row>
       <div class="xian"></div>
       <el-row>
         <h2>
           处理进度:
-          <span>已经处理</span>
+          <span>
+            <span v-show="detailsObj.handoverEvent.handleStatus=== 0 ">待处理</span>
+            <span v-show="detailsObj.handoverEvent.handleStatus=== 1 ">进行中</span>
+            <span v-show="detailsObj.handoverEvent.handleStatus=== 2 ">已处理</span>
+            <span v-show="detailsObj.handoverEvent.handleStatus=== 3 ">不处理</span>
+            <span v-show="detailsObj.handoverEvent.handleStatus=== 4 ">草稿</span>
+          </span>
         </h2>
       </el-row>
     </div>
@@ -141,13 +147,10 @@ export default {
   name: "transaction",
   data() {
     return {
-      templateName: "",
-      createTime: "",
-      deptName: "",
-      eventTypeName: "",
-      supervisor: "",
-      reporter: "",
-      content: ""
+      detailsObj: {
+        handoverEvent: {},
+        handoverHandles: []
+      }
     };
   },
   created() {
@@ -155,16 +158,10 @@ export default {
       url: "admin/event/getEventById",
       method: "post",
       data: {
-        id: this.$route.params.id
+        id: this.$route.query.id
       }
     }).then(res => {
-      this.templateName = res.data.templateName;
-      this.createTime = res.data.handoverEvent.createTime;
-      this.deptName = res.data.handoverEvent.deptName;
-      this.eventTypeName = res.data.handoverEvent.eventTypeName;
-      this.supervisor = res.data.handoverEvent.supervisor;
-      this.reporter = res.data.handoverEvent.reporter;
-      this.content = res.data.handoverEvent.content;
+      this.detailsObj = res.data;
     });
   },
   methods: {
